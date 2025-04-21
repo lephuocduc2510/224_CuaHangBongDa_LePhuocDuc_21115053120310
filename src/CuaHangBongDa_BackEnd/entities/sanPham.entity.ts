@@ -12,12 +12,16 @@ export class SANPHAM {
 
     @Column({ type: 'varchar', length: 255 })
     tenSanPham: string;
+    
+
+    // tạo trường gía
+    // @Column({ type: 'decimal', precision: 10, scale: 2 })
+    // gia: number;
+
 
     @Column({ type: 'text' })
     moTa: string;
 
-    @Column({ type: 'varchar', length: 255 })
-    anhDaiDien: string;
 
     @ManyToOne(() => DANHMUC, (danhMuc) => danhMuc.sanPhams)
     @JoinColumn({ name: 'maDanhMuc' })

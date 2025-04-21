@@ -4,6 +4,8 @@ import express, { Express, NextFunction, Request, Response } from 'express';
 import logger from 'morgan';
 import path from 'path';
 import adminSanPhamRoute from './routes/admin/sanPham.route';
+import adminDanhmucRoute from './routes/admin/danhMuc.routes';
+import adminVaitroRoute from './routes/admin/vaiTro.routes';
 import { AppDataSource } from './data-source';
 // import indexRouter from './routes/index';
 // import categoriesRouter from './routes/categories';
@@ -27,6 +29,8 @@ AppDataSource.initialize().then(async () => {
   app.use(cors({ origin: '*' }));
 
   app.use('/api/admin/sanpham', adminSanPhamRoute);
+  app.use('/api/admin/danhmuc', adminDanhmucRoute);
+  app.use('/api/admin/vaitro', adminVaitroRoute);
 
   // app.use('/', indexRouter);
   // app.use('/categories', categoriesRouter);
