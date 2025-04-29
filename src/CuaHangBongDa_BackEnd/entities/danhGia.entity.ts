@@ -22,7 +22,10 @@ export class DANHGIA {
   @Column({ type: 'datetime' })
   ngayDanhGia: Date;
 
-  @ManyToOne(() => NGUOIDUNG, (nguoiDung) => nguoiDung.danhGias)
+  @ManyToOne(() => NGUOIDUNG, (nguoiDung) => nguoiDung.danhGias, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maKhachHang' })
   nguoiDung: NGUOIDUNG;
 

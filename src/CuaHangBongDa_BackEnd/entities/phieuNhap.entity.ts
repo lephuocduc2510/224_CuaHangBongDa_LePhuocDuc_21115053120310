@@ -10,7 +10,10 @@ export class PHIEUNHAP {
   @Column()
   maNhaCungCap: number;
 
-  @ManyToOne(() => NHACUNGCAP, (nhaCungCap) => nhaCungCap.phieuNhaps)
+  @ManyToOne(() => NHACUNGCAP, (nhaCungCap) => nhaCungCap.phieuNhaps, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maNhaCungCap' })
   nhaCungCap: NHACUNGCAP;
 

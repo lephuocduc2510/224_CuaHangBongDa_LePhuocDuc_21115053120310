@@ -13,11 +13,23 @@ export class PHIEUGIAMGIA_KHACHHANG {
   @Column()
   maVoucher: number;
 
-  @ManyToOne(() => NGUOIDUNG, (nguoiDung) => nguoiDung.phieuGiamGiaKhachHangs)
+  @Column()
+  ngayNhan: Date;
+
+  @Column()
+  daSuDung: boolean;
+
+  @ManyToOne(() => NGUOIDUNG, (nguoiDung) => nguoiDung.phieuGiamGiaKhachHangs, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maKhachHang' })
   nguoiDung: NGUOIDUNG;
 
-  @ManyToOne(() => PHIEUGIAMGIA, (phieuGiamGia) => phieuGiamGia.phieuGiamGiaKhachHangs)
+  @ManyToOne(() => PHIEUGIAMGIA, (phieuGiamGia) => phieuGiamGia.phieuGiamGiaKhachHangs, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maVoucher' })
   phieuGiamGia: PHIEUGIAMGIA;
 }

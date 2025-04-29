@@ -23,7 +23,10 @@ export class SANPHAM {
     moTa: string;
 
 
-    @ManyToOne(() => DANHMUC, (danhMuc) => danhMuc.sanPhams)
+    @ManyToOne(() => DANHMUC, (danhMuc) => danhMuc.sanPhams, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     @JoinColumn({ name: 'maDanhMuc' })
     danhMuc: DANHMUC;
     @OneToMany(() => PHUONGTIENSANPHAM, (phuongTienSanPham) => phuongTienSanPham.sanPham)
@@ -36,7 +39,10 @@ export class SANPHAM {
     @OneToMany(() => DANHGIA, (danhGia) => danhGia.sanPham)
     danhGias: DANHGIA[];
 
-    @ManyToOne(() => NHASANXUAT, (nhaSanXuat) => nhaSanXuat.sanPhams)
+    @ManyToOne(() => NHASANXUAT, (nhaSanXuat) => nhaSanXuat.sanPhams, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     @JoinColumn({ name: 'maNhaSanXuat' })
     nhaSanXuat: NHASANXUAT;
 

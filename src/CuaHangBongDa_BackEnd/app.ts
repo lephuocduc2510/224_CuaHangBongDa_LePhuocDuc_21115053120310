@@ -7,6 +7,13 @@ import adminSanPhamRoute from './routes/admin/sanPham.route';
 import adminDanhmucRoute from './routes/admin/danhMuc.routes';
 import adminVaitroRoute from './routes/admin/vaiTro.routes';
 import { AppDataSource } from './data-source';
+import adminNguoiDungRoute from './routes/admin/nguoiDung.route';
+import adminNhaCungCapRoute from './routes/admin/nhaCungCap.route';
+import adminNhaSanXuatRoute from './routes/admin/nhaSanXuat.route';
+import adminDonHangRoute from './routes/admin/donHang.route';
+import adminPhieuGiamGiaRoute from './routes/admin/phieuGiamGia.route';
+import adminMauSacRoute from './routes/admin/mauSac.route';
+import adminKichCoRoute from './routes/admin/kichCo.route';
 // import indexRouter from './routes/index';
 // import categoriesRouter from './routes/categories';
 // import suppliersRouter from './routes/suppliers';
@@ -31,6 +38,13 @@ AppDataSource.initialize().then(async () => {
   app.use('/api/admin/sanpham', adminSanPhamRoute);
   app.use('/api/admin/danhmuc', adminDanhmucRoute);
   app.use('/api/admin/vaitro', adminVaitroRoute);
+  app.use('/api/admin/nguoidung', adminNguoiDungRoute);
+  app.use('/api/admin/nhacungcap', adminNhaCungCapRoute);
+  app.use('/api/admin/nhasanxuat', adminNhaSanXuatRoute);
+  app.use('/api/admin/donhang', adminDonHangRoute);
+  app.use('/api/admin/phieugiamgia', adminPhieuGiamGiaRoute);
+  app.use('/api/admin/mausac', adminMauSacRoute);
+  app.use('/api/admin/kichco', adminKichCoRoute);
 
   // app.use('/', indexRouter);
   // app.use('/categories', categoriesRouter);

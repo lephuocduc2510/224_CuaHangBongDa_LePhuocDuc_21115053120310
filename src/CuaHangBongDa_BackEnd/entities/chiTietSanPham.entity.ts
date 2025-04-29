@@ -31,15 +31,24 @@ export class SANPHAM_CHITIET {
   @Column({ type: 'int' })
   soLuongTon: number;
 
-  @ManyToOne(() => SANPHAM, (sanPham) => sanPham.sanPhamChiTiet)
+  @ManyToOne(() => SANPHAM, (sanPham) => sanPham.sanPhamChiTiet, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maSanPham' })
   sanPham: SANPHAM;
 
-  @ManyToOne(() => MAUSAC, (mauSac) => mauSac.sanPhamChiTiet)
+  @ManyToOne(() => MAUSAC, (mauSac) => mauSac.sanPhamChiTiet, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maMauSac' })
   mauSac: MAUSAC;
 
-  @ManyToOne(() => KICHCO, (kichCo) => kichCo.sanPhamChiTiet)
+  @ManyToOne(() => KICHCO, (kichCo) => kichCo.sanPhamChiTiet, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maKichCo' })
   kichCo: KICHCO;
 

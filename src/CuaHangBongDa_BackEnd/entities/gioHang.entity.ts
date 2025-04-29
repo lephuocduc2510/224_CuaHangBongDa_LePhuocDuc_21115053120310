@@ -20,7 +20,10 @@ export class GIOHANG {
  @Column()
  tongTien: number;
 
-  @ManyToOne(() => NGUOIDUNG, (nguoiDung) => nguoiDung.gioHangs)
+  @ManyToOne(() => NGUOIDUNG, (nguoiDung) => nguoiDung.gioHangs, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maNguoiDung' })
   nguoiDung: NGUOIDUNG;
 

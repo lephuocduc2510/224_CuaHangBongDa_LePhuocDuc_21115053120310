@@ -18,7 +18,10 @@ export class DONHANG {
   tongTien: number;
 
   @Column({ type: 'date' })
-  ngayDatHang: Date;
+  ngayDatHang: Date; 
+  
+
+  
 
   @ManyToOne(() => NGUOIDUNG, (nguoiDung) => nguoiDung.donHangs)
   @JoinColumn({ name: 'maNguoiDung' })

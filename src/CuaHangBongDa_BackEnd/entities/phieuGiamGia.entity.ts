@@ -3,7 +3,7 @@ import { PHIEUGIAMGIA_KHACHHANG } from './phieuGiamGia_khachHang.entity';
 
 @Entity('PHIEUGIAMGIA')
 export class PHIEUGIAMGIA {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'maPhieuGiamGia' })
   id: number;
 
   @Column({ type: 'varchar', length: 50 })

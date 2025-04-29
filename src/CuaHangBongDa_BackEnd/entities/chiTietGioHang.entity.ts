@@ -13,12 +13,18 @@ export class GIOHANG_CHITIET {
   @Column()
   soLuong: number;
 
-  @ManyToOne(() => GIOHANG, (gioHang) => gioHang.chiTietGioHangs)
+  @ManyToOne(() => GIOHANG, (gioHang) => gioHang.chiTietGioHangs, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maGioHang' })
   gioHang: GIOHANG;
    
 
-  @ManyToOne(() =>SANPHAM_CHITIET, (sanpham) => sanpham.chiTietGioHangs)
+  @ManyToOne(() =>SANPHAM_CHITIET, (sanpham) => sanpham.chiTietGioHangs, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'maChiTietSanPham' })
   sanPhamChiTiet: SANPHAM_CHITIET;
 }

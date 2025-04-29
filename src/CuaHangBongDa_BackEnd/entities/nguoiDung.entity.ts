@@ -54,7 +54,10 @@ export class NGUOIDUNG {
   @Column()
   maVaiTro: number;
 
-  @ManyToOne(() => VAITRO, (vaiTro) => vaiTro.nguoiDungs)
+  @ManyToOne(() => VAITRO, (vaiTro) => vaiTro.nguoiDungs, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  }) 
   @JoinColumn({ name: 'maVaiTro' })
   vaiTro: VAITRO;
 
