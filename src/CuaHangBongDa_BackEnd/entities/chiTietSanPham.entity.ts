@@ -22,9 +22,6 @@ export class SANPHAM_CHITIET {
   @Column()
   maKichCo: number;
 
-  @Column()
-  maPhuongTien: number;
-
   @Column({ type: 'float' })
   gia: number;
 

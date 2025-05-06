@@ -6,9 +6,9 @@ export class MAUSAC {
   @PrimaryGeneratedColumn({name: 'maMauSac'} )
   id: number;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'nvarchar', length: 50 })
   tenMau: string;
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   moTa: string;
 
   @OneToMany(() => SANPHAM_CHITIET, (sanPhamChiTiet) => sanPhamChiTiet.mauSac)

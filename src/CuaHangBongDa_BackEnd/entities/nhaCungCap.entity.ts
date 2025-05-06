@@ -16,7 +16,7 @@ export class NHACUNGCAP {
   @PrimaryGeneratedColumn({ name: 'maNhaCungCap', type: 'int' }) 
   id: number;
 
-  @Column({ length: 100 })
+  @Column({type: 'nvarchar', length: 100 })
   tenNhaCungCap: string;
 
   @Column({ length: 255 })

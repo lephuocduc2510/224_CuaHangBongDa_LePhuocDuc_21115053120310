@@ -6,6 +6,7 @@ import { GIOHANG } from './gioHang.entity';
 import { DANHGIA } from './danhGia.entity';
 import { TINNHAN } from './tinNhan.entity';
 import { IsEmail, IsPhoneNumber } from 'class-validator';
+import { DIACHI_GIAOHANG } from './diaChiGiaoHang.entity';
 
 @Entity('NGUOIDUNG')
 @Index('IDX_maVaiTro', ['maVaiTro'])
@@ -13,16 +14,10 @@ export class NGUOIDUNG {
   @PrimaryGeneratedColumn({name: 'maNguoiDung'} )
   id: number;
 
-  @Column({ type: 'varchar', length: 50  })
-  ho: string;
+  @Column({ type: 'nvarchar', length: 50, nullable: true  })
+  hoVaTen: string;
 
-  @Column({ type: 'varchar', length: 50 })
-  ten: string;
-
-  @Column()
-  maPhuongXa: number;
-
-  @Column({ type: 'varchar', length: 500 })
+  @Column({ type: 'nvarchar', length: 500 })
   diaChi: string;
 
   @Column({ type: 'varchar', length: 50, unique: true , nullable: false})
@@ -39,16 +34,19 @@ export class NGUOIDUNG {
   @Column({ type: 'varchar', length: 255 })
   matKhau: string;
 
-  @Column({ type: 'varchar', length: 500 })
+  @Column({ type: 'datetime2', default: () => 'GETDATE()', nullable: true })
+  ngayTao: Date;
+
+  @Column({ type: 'varchar', length: 500, nullable: true })
   anhDaiDien: string;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'datetime', nullable: true })
   ngayDoiMatKhau: Date;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   tokenDatLaiMatKhau: string;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'datetime', nullable: true })
   tokenHetHan: Date;
 
   @Column()
@@ -78,4 +76,8 @@ export class NGUOIDUNG {
 
   @OneToMany(() => TINNHAN, (tinNhan) => tinNhan.nguoiNhan)
   tinNhansNhan: TINNHAN[];
+
+  @OneToMany(() => DIACHI_GIAOHANG, (diaChi) => diaChi.nguoiDung)
+  diaChiGiaoHang: DIACHI_GIAOHANG[];
+
 }

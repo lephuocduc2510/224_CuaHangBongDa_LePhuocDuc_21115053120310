@@ -1,6 +1,7 @@
 import { AppDataSource } from '../data-source';
 import { NHASANXUAT } from '../entities/nhaSanXuat.entity';
 
+
 const repo = AppDataSource.getRepository(NHASANXUAT);
 
 export const getAllNhaSanXuat = async () => {

@@ -6,7 +6,7 @@ export class PHUONG_XA {
   @PrimaryGeneratedColumn({name: 'maPhuongXa'} )
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   tenPhuongXa: string;
 
   @Column()

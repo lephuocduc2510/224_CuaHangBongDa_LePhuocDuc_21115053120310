@@ -1,4 +1,4 @@
-import cookieParser from 'cookie-parser';
+
 import cors from 'cors';
 import express, { Express, NextFunction, Request, Response } from 'express';
 import logger from 'morgan';
@@ -14,6 +14,10 @@ import adminDonHangRoute from './routes/admin/donHang.route';
 import adminPhieuGiamGiaRoute from './routes/admin/phieuGiamGia.route';
 import adminMauSacRoute from './routes/admin/mauSac.route';
 import adminKichCoRoute from './routes/admin/kichCo.route';
+import cookieParser from 'cookie-parser';
+import authRoutes from './routes/auth.route';
+import adminPhuongTienRoute from './routes/admin/phuongTienSanPham.routes';
+import fs from 'fs';
 // import indexRouter from './routes/index';
 // import categoriesRouter from './routes/categories';
 // import suppliersRouter from './routes/suppliers';
@@ -25,7 +29,11 @@ const app: Express = express();
 
 AppDataSource.initialize().then(async () => {
   console.log('Data source was initialized');
-
+  // Đảm bảo thư mục uploads tồn tại
+  const uploadsDir = path.join(__dirname, 'public', 'uploads');
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
   app.use(logger('dev'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
@@ -45,7 +53,8 @@ AppDataSource.initialize().then(async () => {
   app.use('/api/admin/phieugiamgia', adminPhieuGiamGiaRoute);
   app.use('/api/admin/mausac', adminMauSacRoute);
   app.use('/api/admin/kichco', adminKichCoRoute);
-
+  app.use('/api/auth', authRoutes);
+  app.use('/api/admin/phuongtien', adminPhuongTienRoute);
   // app.use('/', indexRouter);
   // app.use('/categories', categoriesRouter);
   // app.use('/products', productsRouter);

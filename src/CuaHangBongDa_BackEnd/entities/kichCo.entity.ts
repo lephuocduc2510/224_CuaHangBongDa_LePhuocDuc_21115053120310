@@ -6,9 +6,9 @@ export class KICHCO {
   @PrimaryGeneratedColumn({name: 'maKichCo'} )
   id: number;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'nvarchar', length: 50 })
   tenKichCo: string
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   moTa: string;
 
   @OneToMany(() => SANPHAM_CHITIET, (sanPhamChiTiet) => sanPhamChiTiet.kichCo)

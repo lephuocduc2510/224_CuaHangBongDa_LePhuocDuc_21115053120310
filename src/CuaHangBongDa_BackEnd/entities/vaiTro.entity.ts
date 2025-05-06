@@ -6,10 +6,10 @@ export class VAITRO {
   @PrimaryGeneratedColumn({name: 'maVaiTro'} )
   id: number;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'nvarchar', length: 50 })
   tenVaiTro: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ type: 'nvarchar', length: 255, nullable: true })
   moTa: string;
 
   @OneToMany(() => NGUOIDUNG, (nguoiDung) => nguoiDung.vaiTro)

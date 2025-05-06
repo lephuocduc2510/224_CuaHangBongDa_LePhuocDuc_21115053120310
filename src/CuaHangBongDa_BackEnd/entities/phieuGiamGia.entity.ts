@@ -9,7 +9,7 @@ export class PHIEUGIAMGIA {
   @Column({ type: 'varchar', length: 50 })
   maVoucher: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   tenVoucher: string;
 
   @Column({ type: 'datetime' })

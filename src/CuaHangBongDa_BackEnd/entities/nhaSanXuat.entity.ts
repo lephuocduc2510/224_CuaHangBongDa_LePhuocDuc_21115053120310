@@ -7,10 +7,10 @@ export class NHASANXUAT {
   @PrimaryGeneratedColumn({name: 'maNhaSanXuat'} )
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   tenNhaSanXuat: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   diaChi: string;
 
   @Column()

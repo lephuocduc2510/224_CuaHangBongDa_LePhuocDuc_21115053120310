@@ -10,7 +10,7 @@ export class SANPHAM {
     @PrimaryGeneratedColumn({name: 'maSanPham'} )
     id: number;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'nvarchar', length: 255 })
     tenSanPham: string;
     
 

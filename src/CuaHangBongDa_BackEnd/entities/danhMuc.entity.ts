@@ -6,7 +6,7 @@ export class DANHMUC {
   @PrimaryGeneratedColumn({name: 'maDanhMuc'} )
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   tenDanhMuc: string;
 
   @Column({ type: 'text' })

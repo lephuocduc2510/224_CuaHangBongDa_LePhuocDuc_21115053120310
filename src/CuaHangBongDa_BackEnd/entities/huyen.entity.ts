@@ -7,7 +7,7 @@ export class QUAN_HUYEN {
   @PrimaryGeneratedColumn({name: 'maQuanHuyen'} )
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   tenQuanHuyen: string;
 
   @Column()

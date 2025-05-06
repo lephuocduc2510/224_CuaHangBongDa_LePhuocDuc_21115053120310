@@ -2,6 +2,7 @@
 import { AppDataSource } from '../data-source';
 import { SANPHAM } from '../entities/sanPham.entity';
 import { SANPHAM_CHITIET } from '../entities/chiTietSanPham.entity';
+import { Not } from 'typeorm';
 
 const repo = AppDataSource.getRepository(SANPHAM);
 const chiTietRepo = AppDataSource.getRepository(SANPHAM_CHITIET);
@@ -13,10 +14,26 @@ export const getAllSanPham = async () => {
 };
 
 export const getSanPhamById = async (id: number) => {
-  return await repo.findOne({
+  // Lấy thông tin sản phẩm với các relations an toàn
+  const sanPham = await repo.findOne({
     where: { id },
-    relations: ['danhMuc', 'nhaSanXuat', 'phuongTienSanPham', 'sanPhamChiTiet', 'danhGias']
+    relations: ['danhMuc', 'nhaSanXuat', 'phuongTienSanPham', 'danhGias']
   });
+
+  if (!sanPham) {
+    return null;
+  }
+
+  // Lấy riêng chi tiết sản phẩm
+  const chiTiet = await chiTietRepo.find({
+    where: { maSanPham: id },
+    relations: ['mauSac', 'kichCo']
+  });
+
+  // Gán chi tiết vào đối tượng sản phẩm
+  sanPham.sanPhamChiTiet = chiTiet;
+
+  return sanPham;
 };
 
 export const createSanPham = async (data: any) => {
@@ -63,6 +80,8 @@ export const updateSanPham = async (id: number, data: any) => {
   
   // Kiểm tra sản phẩm tồn tại
   const sanPham = await repo.findOne({ where: { id } });
+  console.log(sanPham);
+
   if (!sanPham) {
     throw new Error('Không tìm thấy sản phẩm');
   }
@@ -130,4 +149,119 @@ export const deleteSanPham = async (id: number) => {
   } finally {
     await queryRunner.release();
   }
+};
+
+
+
+// Thêm vào cuối file, sau các hàm hiện có
+
+// ========== QUẢN LÝ CHI TIẾT SẢN PHẨM ==========
+
+export const getChiTietSanPhamBySanPhamId = async (sanPhamId: number) => {
+  // Kiểm tra sản phẩm tồn tại
+  const sanPham = await repo.findOne({ where: { id: sanPhamId } });
+  if (!sanPham) {
+    throw new Error('Không tìm thấy sản phẩm');
+  }
+
+  // Lấy chi tiết sản phẩm
+  return await chiTietRepo.find({
+    where: { maSanPham: sanPhamId },
+    relations: ['mauSac', 'kichCo']
+  });
+};
+
+export const createChiTietSanPham = async (sanPhamId: number, data: any) => {
+  // Kiểm tra sản phẩm tồn tại
+  const sanPham = await repo.findOne({ where: { id: sanPhamId } });
+ 
+  if (!sanPham) {
+    throw new Error('Không tìm thấy sản phẩm');
+  }
+
+  // Kiểm tra đã tồn tại chi tiết sản phẩm với màu sắc và kích cỡ này chưa
+  const existingChiTiet = await chiTietRepo.findOne({
+    where: {
+      maSanPham: sanPhamId,
+      maMauSac: data.maMauSac,
+      maKichCo: data.maKichCo
+    }
+  });
+
+  if (existingChiTiet) {
+    throw new Error('Chi tiết sản phẩm với màu sắc và kích cỡ này đã tồn tại');
+  }
+
+  // Tạo chi tiết sản phẩm mới
+  const chiTiet = chiTietRepo.create({
+    ...data,
+    maSanPham: sanPhamId
+  });
+
+  return await chiTietRepo.save(chiTiet);
+};
+
+export const updateChiTietSanPham = async (chiTietId: number, data: any) => {
+  // Kiểm tra chi tiết sản phẩm tồn tại
+  const chiTiet = await chiTietRepo.findOne({ where: { id: chiTietId } });
+  if (!chiTiet) {
+    throw new Error('Không tìm thấy chi tiết sản phẩm');
+  }
+
+  // Nếu cập nhật màu sắc và kích cỡ, kiểm tra trùng lặp
+  if (data.maMauSac && data.maKichCo) {
+    const existingChiTiet = await chiTietRepo.findOne({
+      where: {
+        maSanPham: chiTiet.maSanPham,
+        maMauSac: data.maMauSac,
+        maKichCo: data.maKichCo,
+        id: Not(chiTietId) // Loại trừ chính nó
+      }
+    });
+
+    if (existingChiTiet) {
+      throw new Error('Chi tiết sản phẩm với màu sắc và kích cỡ này đã tồn tại');
+    }
+  }
+
+  // Cập nhật chi tiết sản phẩm
+  await chiTietRepo.update(chiTietId, data);
+
+  // Trả về chi tiết sản phẩm sau khi cập nhật
+  return await chiTietRepo.findOne({ 
+    where: { id: chiTietId },
+    relations: ['mauSac', 'kichCo'] 
+  });
+};
+
+export const deleteChiTietSanPham = async (chiTietId: number) => {
+  // Kiểm tra chi tiết sản phẩm tồn tại
+  const chiTiet = await chiTietRepo.findOne({ where: { id: chiTietId } });
+  if (!chiTiet) {
+    throw new Error('Không tìm thấy chi tiết sản phẩm');
+  }
+
+  // Xóa chi tiết sản phẩm
+  await chiTietRepo.delete(chiTietId);
+
+  return { message: 'Xóa chi tiết sản phẩm thành công' };
+};
+
+// ========== QUẢN LÝ PHƯƠNG TIỆN SẢN PHẨM ==========
+
+export const getPhuongTienSanPhamBySanPhamId = async (sanPhamId: number) => {
+  // Kiểm tra sản phẩm tồn tại
+  const sanPham = await repo.findOne({ where: { id: sanPhamId } });
+  if (!sanPham) {
+    throw new Error('Không tìm thấy sản phẩm');
+  }
+
+  // Import repository phương tiện sản phẩm
+  const phuongTienRepo = AppDataSource.getRepository('PHUONGTIENSANPHAM');
+
+  // Lấy danh sách phương tiện sản phẩm
+  return await phuongTienRepo.find({
+    where: { maSanPham: sanPhamId },
+    order: { laPhuongTienChinh: 'DESC' }
+  });
 };

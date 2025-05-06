@@ -6,7 +6,7 @@ export class TINNHAN {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'nvarchar', length: 255 })
   noiDung: string;
 
   @Column({ type: 'datetime' })
