@@ -17,9 +17,6 @@ export class NGUOIDUNG {
   @Column({ type: 'nvarchar', length: 50, nullable: true  })
   hoVaTen: string;
 
-  @Column({ type: 'nvarchar', length: 500 })
-  diaChi: string;
-
   @Column({ type: 'varchar', length: 50, unique: true , nullable: false})
   @IsEmail()
   email: string;
@@ -52,6 +49,9 @@ export class NGUOIDUNG {
   @Column()
   maVaiTro: number;
 
+  @OneToMany(() => DIACHI_GIAOHANG, (diaChi) => diaChi.nguoiDung)
+  diaChiGiaoHang: DIACHI_GIAOHANG[];
+
   @ManyToOne(() => VAITRO, (vaiTro) => vaiTro.nguoiDungs, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -77,7 +77,6 @@ export class NGUOIDUNG {
   @OneToMany(() => TINNHAN, (tinNhan) => tinNhan.nguoiNhan)
   tinNhansNhan: TINNHAN[];
 
-  @OneToMany(() => DIACHI_GIAOHANG, (diaChi) => diaChi.nguoiDung)
-  diaChiGiaoHang: DIACHI_GIAOHANG[];
+  
 
 }

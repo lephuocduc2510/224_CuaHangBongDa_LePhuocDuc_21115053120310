@@ -25,6 +25,7 @@ import { SANPHAM } from './entities/sanPham.entity';
 import { TINH_THANHPHO } from './entities/tinhThanh.entity';
 import { TINNHAN } from './entities/tinNhan.entity';
 import { VAITRO } from './entities/vaiTro.entity';
+import { DIACHI_GIAOHANG } from './entities/diaChiGiaoHang.entity';
 
 
 
@@ -36,7 +37,7 @@ export const AppDataSource = new DataSource({
   password: '123456',
   database: 'CuaHangBongDa',
   // entities: ['entities/**/*.entity{.ts,.js}', 'entities/**/*.schema{.ts,.js}'],
-  entities: [CHITIETDONHANG, CHITIET_PHIEUNHAP, GIOHANG_CHITIET, SANPHAM_CHITIET, DANHGIA, DANHMUC, DONHANG, PHIEUGIAMGIA, PHIEUGIAMGIA_KHACHHANG, PHIEUNHAP, GIOHANG, QUAN_HUYEN, KICHCO, MAUSAC, NGUOIDUNG, NHACUNGCAP, NHASANXUAT, PHUONGTIENSANPHAM, PHUONG_XA, SANPHAM, TINH_THANHPHO, TINNHAN, VAITRO],
+  entities: [CHITIETDONHANG, DIACHI_GIAOHANG,CHITIET_PHIEUNHAP, GIOHANG_CHITIET, SANPHAM_CHITIET, DANHGIA, DANHMUC, DONHANG, PHIEUGIAMGIA, PHIEUGIAMGIA_KHACHHANG, PHIEUNHAP, GIOHANG, QUAN_HUYEN, KICHCO, MAUSAC, NGUOIDUNG, NHACUNGCAP, NHASANXUAT, PHUONGTIENSANPHAM, PHUONG_XA, SANPHAM, TINH_THANHPHO, TINNHAN, VAITRO],
   synchronize: true,
   logging: false,
   options: {

@@ -17,6 +17,8 @@ import adminKichCoRoute from './routes/admin/kichCo.route';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.route';
 import adminPhuongTienRoute from './routes/admin/phuongTienSanPham.routes';
+import diaChiGiaoHangRoutes from './routes/diaChiGiaoHang.routes';
+import diaChiRoutes from './routes/admin/diaChi.routes';
 import fs from 'fs';
 // import indexRouter from './routes/index';
 // import categoriesRouter from './routes/categories';
@@ -55,6 +57,9 @@ AppDataSource.initialize().then(async () => {
   app.use('/api/admin/kichco', adminKichCoRoute);
   app.use('/api/auth', authRoutes);
   app.use('/api/admin/phuongtien', adminPhuongTienRoute);
+  app.use('/api/diachi-giaohang', diaChiGiaoHangRoutes);
+  app.use('/api/admin/diachi-giaohang', diaChiGiaoHangRoutes);
+  app.use('/api/admin/diachi', diaChiRoutes);
   // app.use('/', indexRouter);
   // app.use('/categories', categoriesRouter);
   // app.use('/products', productsRouter);

@@ -44,7 +44,7 @@ export class DIACHI_GIAOHANG {
 
   // Quan hệ với người dùng - Sử dụng string để tránh circular dependency
   @ManyToOne(() => NGUOIDUNG, (nguoiDung) => nguoiDung.diaChiGiaoHang)
-  @JoinColumn({ name: 'nguoiDungId' })
+  @JoinColumn({ name: 'maNguoiDung' })
   nguoiDung: NGUOIDUNG;
 
 
