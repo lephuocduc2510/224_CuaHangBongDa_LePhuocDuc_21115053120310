@@ -31,11 +31,11 @@ import { DIACHI_GIAOHANG } from './entities/diaChiGiaoHang.entity';
 
 export const AppDataSource = new DataSource({
   type: 'mssql',
-  host: "localhost",
-  port: 1433,
-  username: 'sa',
-  password: '123456',
-  database: 'CuaHangBongDa',
+  host: process.env.SQL_HOST,
+  port: Number(process.env.SQL_PORT),
+  username: process.env.SQL_USER,
+  password: process.env.SQL_PASSWORD,
+  database: process.env.SQL_DATABASE,
   // entities: ['entities/**/*.entity{.ts,.js}', 'entities/**/*.schema{.ts,.js}'],
   entities: [CHITIETDONHANG, DIACHI_GIAOHANG,CHITIET_PHIEUNHAP, GIOHANG_CHITIET, SANPHAM_CHITIET, DANHGIA, DANHMUC, DONHANG, PHIEUGIAMGIA, PHIEUGIAMGIA_KHACHHANG, PHIEUNHAP, GIOHANG, QUAN_HUYEN, KICHCO, MAUSAC, NGUOIDUNG, NHACUNGCAP, NHASANXUAT, PHUONGTIENSANPHAM, PHUONG_XA, SANPHAM, TINH_THANHPHO, TINNHAN, VAITRO],
   synchronize: true,

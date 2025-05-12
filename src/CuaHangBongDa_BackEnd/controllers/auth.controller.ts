@@ -46,7 +46,8 @@ export const login = async (req: Request, res: Response) => {
     res.json({
       message: 'Đăng nhập thành công',
       user: result.user,
-      accessToken: result.accessToken
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken
     });
   } catch (error: any) {
     res.status(401).json({ message: error.message });
@@ -93,4 +94,42 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
 export const logout = (req: Request, res: Response) => {
   res.clearCookie('refreshToken');
   res.json({ message: 'Đăng xuất thành công' });
+};
+
+
+// Xác thực email
+export const verifyEmail = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params;
+    
+    if (!token) {
+      return res.status(400).json({ message: 'Token xác thực không hợp lệ' });
+    }
+    
+    await authService.verifyEmail(token);
+    
+    res.status(200).json({ message: 'Xác thực email thành công. Bạn có thể đăng nhập ngay bây giờ.' });
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Thêm controller gửi lại email xác thực
+export const resendVerification = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return res.status(400).json({ message: 'Email là bắt buộc' });
+    }
+    
+    const result = await authService.resendVerificationEmail(email);
+    
+    res.status(200).json({ 
+      message: 'Đã gửi lại email xác thực. Vui lòng kiểm tra hộp thư đến của bạn.',
+      success: result.success
+    });
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
 };

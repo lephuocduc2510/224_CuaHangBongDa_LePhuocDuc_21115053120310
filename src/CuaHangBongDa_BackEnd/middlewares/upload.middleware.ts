@@ -3,6 +3,10 @@ import { AppDataSource } from '../data-source';
 import { SANPHAM } from '../entities/sanPham.entity';
 import * as fs from 'fs';
 import * as path from 'path';
+import multer from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import { FileFilterCallback } from 'multer';
+
 
 const sanPhamRepo = AppDataSource.getRepository(SANPHAM);
 
@@ -112,3 +116,60 @@ export const renameUploadedFiles = async (req: Request, res: Response, next: Nex
     next();
   }
 };
+
+
+
+
+// Multer để upload avatar
+
+const avatarStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // Tạo thư mục uploads/avatars nếu chưa tồn tại
+    const uploadDir = path.join(__dirname, '..', 'public', 'uploads', 'avatars');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    
+    // Tạo thư mục riêng cho user nếu cần
+    if (req.user && req.user.id) {
+      const userDir = path.join(uploadDir, req.user.id.toString());
+      if (!fs.existsSync(userDir)) {
+        fs.mkdirSync(userDir, { recursive: true });
+      }
+      cb(null, userDir);
+    } else {
+      cb(null, uploadDir);
+    }
+  },
+  filename: function (req: any, file: Express.Multer.File, cb: any) {
+    // Đảm bảo tên file không trùng
+    const fileExt = path.extname(file.originalname);
+    const uniquePrefix = 'avatar-' + Date.now() + '-' + uuidv4().substring(0, 8);
+    cb(null, uniquePrefix + fileExt);
+  }
+});
+
+// Filter cho việc upload avatar
+const avatarFileFilter = (
+  req: any, 
+  file: Express.Multer.File, 
+  cb: FileFilterCallback
+) => {
+  // Chỉ chấp nhận các loại file ảnh
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+  
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Chỉ chấp nhận file ảnh (JPEG, PNG, GIF, WEBP)'));
+  }
+};
+
+// Cấu hình multer cho avatar
+export const uploadAvatar = multer({
+  storage: avatarStorage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB
+  },
+  fileFilter: avatarFileFilter
+});

@@ -11,13 +11,13 @@ import { DIACHI_GIAOHANG } from './diaChiGiaoHang.entity';
 @Entity('NGUOIDUNG')
 @Index('IDX_maVaiTro', ['maVaiTro'])
 export class NGUOIDUNG {
-  @PrimaryGeneratedColumn({name: 'maNguoiDung'} )
+  @PrimaryGeneratedColumn({ name: 'maNguoiDung' })
   id: number;
 
-  @Column({ type: 'nvarchar', length: 50, nullable: true  })
+  @Column({ type: 'nvarchar', length: 50, nullable: true })
   hoVaTen: string;
 
-  @Column({ type: 'varchar', length: 50, unique: true , nullable: false})
+  @Column({ type: 'varchar', length: 50, unique: true, nullable: false })
   @IsEmail()
   email: string;
 
@@ -25,7 +25,7 @@ export class NGUOIDUNG {
   @IsPhoneNumber('VN')
   soDienThoai: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   ngaySinh: Date;
 
   @Column({ type: 'varchar', length: 255 })
@@ -39,6 +39,15 @@ export class NGUOIDUNG {
 
   @Column({ type: 'datetime', nullable: true })
   ngayDoiMatKhau: Date;
+
+  @Column({ default: false })
+  daXacThuc: boolean;
+
+  @Column({ nullable: true })
+  maXacThucEmail: string;
+
+  @Column({ nullable: true })
+  thoiGianHetHanMaXacThuc: Date;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   tokenDatLaiMatKhau: string;
@@ -55,7 +64,7 @@ export class NGUOIDUNG {
   @ManyToOne(() => VAITRO, (vaiTro) => vaiTro.nguoiDungs, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-  }) 
+  })
   @JoinColumn({ name: 'maVaiTro' })
   vaiTro: VAITRO;
 
@@ -77,6 +86,6 @@ export class NGUOIDUNG {
   @OneToMany(() => TINNHAN, (tinNhan) => tinNhan.nguoiNhan)
   tinNhansNhan: TINNHAN[];
 
-  
+
 
 }
